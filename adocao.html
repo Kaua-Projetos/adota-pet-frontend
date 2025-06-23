@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoção | Adote+</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon"><i class="fas fa-paw"></i></span>
+                    <span class="logo-text">Adote+</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="adocao.html">Adoção</a></li>
+                    <li><a href="ajuda.html">Ajuda</a></li>
+                    <li id="loginButton" style="display: none;">
+                        <a href="login.html" class="btn btn-primary">Entrar</a>
+                    </li>
+                    <li id="userProfile" style="display: none;">
+                        <div class="user-profile">
+                            <img src="assets/images/default-avatar.svg" alt="Avatar do usuário">
+                            <div class="user-menu">
+                                <a href="perfil.html" class="user-menu-item">
+                                    <i class="fas fa-user"></i>
+                                    Perfil
+                                </a>
+                                <a href="#" class="user-menu-item" id="logoutButton">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Adote um amigo</h2>
+                <p>Conheça os animais disponíveis para adoção e encontre seu companheiro ideal</p>
+            </div>
+            
+            <div class="filters">
+                <div class="filters-header">
+                    <h3>Filtrar animais</h3>
+                </div>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="category">Tipo de Animal</label>
+                        <select id="category" class="filter-select">
+                            <option value="">Todos</option>
+                            <option value="dog">Cachorro</option>
+                            <option value="cat">Gato</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="age">Idade</label>
+                        <select id="age" class="filter-select">
+                            <option value="">Todas</option>
+                            <option value="filhote">Filhote</option>
+                            <option value="adulto">Adulto</option>
+                            <option value="idoso">Idoso</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="size">Porte</label>
+                        <select id="size" class="filter-select">
+                            <option value="">Todos</option>
+                            <option value="pequeno">Pequeno</option>
+                            <option value="medio">Médio</option>
+                            <option value="grande">Grande</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button id="resetFilters" class="btn btn-outline">Limpar filtros</button>
+                </div>
+            </div>
+            
+            <div class="pet-results" id="petResults">
+                <div class="pet-card" data-category="dog" data-age="adulto" data-size="medio">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Thor">
+                        <div class="pet-tag">Cachorro</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Thor</h3>
+                        <p>2 anos, Macho, Porte Médio</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=1" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card" data-category="cat" data-age="adulto" data-size="pequeno">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Luna">
+                        <div class="pet-tag">Gato</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Luna</h3>
+                        <p>5 anos, Fêmea, Porte Pequeno</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=2" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card" data-category="dog" data-age="adulto" data-size="grande">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Max">
+                        <div class="pet-tag">Cachorro</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Max</h3>
+                        <p>3 anos, Macho, Porte Grande</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=3" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card" data-category="cat" data-age="idoso" data-size="pequeno">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Félix">
+                        <div class="pet-tag">Gato</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Félix</h3>
+                        <p>12 anos, Macho, Porte Pequeno</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=4" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card" data-category="dog" data-age="adulto" data-size="grande">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Bob">
+                        <div class="pet-tag">Cachorro</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Bob</h3>
+                        <p>4 anos, Macho, Porte Grande</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=5" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card" data-category="cat" data-age="filhote" data-size="pequeno">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mia">
+                        <div class="pet-tag">Gato</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Mia</h3>
+                        <p>1 ano, Fêmea, Porte Pequeno</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=6" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <span class="logo-icon"><i class="fas fa-paw"></i></span>
+                        <span class="logo-text">Adote+</span>
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contato</h4>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> adotemais@gmail.com</li>
+                            <li><i class="fas fa-phone"></i> (65) 99999-9999</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Cuiabá, MT</li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Redes Sociais</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Adote+. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/data.js"></script>
+
+    <div id="adoptionModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Formulário de Adoção - <span id="petNameModal"></span></h2>
+                <button id="closeModal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Preencha o formulário abaixo para iniciar o processo de adoção. Todas as informações são confidenciais e serão usadas apenas para avaliar a compatibilidade entre você e o animal.</p>
+                
+                <div class="adoption-form-container">
+                    <form id="adoptionForm">
+                        <input type="hidden" id="petIdHidden" name="petId" value="">
+                        <input type="hidden" id="petTypeHidden" name="petType" value="">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Nome Completo</label>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Telefone</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Idade</label>
+                                <input type="number" id="age" name="age" class="form-control" min="18" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Endereço Completo</label>
+                            <input type="text" id="address" name="address" class="form-control" required>
+                        </div>
+                        
+                        <h3>Compatibilidade</h3>
+                        <p>Responda algumas perguntas para verificarmos a compatibilidade com o animal.</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="homeType">Tipo de Residência</label>
+                                <select id="homeType" name="homeType" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="apartment">Apartamento</option>
+                                    <option value="house">Casa</option>
+                                    <option value="farm">Chácara/Sítio</option>
+                                    <option value="other">Outro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" style="width: 100%;">
+                                <label for="hasYard">Possui quintal ou área externa?</label>
+                                <select id="hasYard" name="hasYard" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="yes">Sim</option>
+                                    <option value="no">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group" style="width: 100%;">
+                                <label for="timeAlone">Quanto tempo o animal ficaria sozinho por dia?</label>
+                                <select id="timeAlone" name="timeAlone" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="less2">Menos de 2 horas</option>
+                                    <option value="2to5">2 a 5 horas</option>
+                                    <option value="5to8">5 a 8 horas</option>
+                                    <option value="more8">Mais de 8 horas</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="otherPets">Possui outros animais?</label>
+                                <select id="otherPets" name="otherPets" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="noPets">Não possuo outros animais</option>
+                                    <option value="dogs">Sim, tenho cachorros</option>
+                                    <option value="cats">Sim, tenho gatos</option>
+                                    <option value="both">Sim, tenho cachorros e gatos</option>
+                                    <option value="other">Sim, tenho outros tipos de animais</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="experience">Tem experiência com animais?</label>
+                                <select id="experience" name="experience" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="none">Nunca tive animais</option>
+                                    <option value="some">Tenho alguma experiência</option>
+                                    <option value="experienced">Tenho bastante experiência</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="activityLevel">Nível de Atividade Física:</label>
+                                <select id="activityLevel" name="activityLevel" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="sedentary">Sedentário</option>
+                                    <option value="moderate">Moderado</option>
+                                    <option value="active">Ativo</option>
+                                    <option value="veryActive">Muito Ativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="income">Renda Mensal Familiar:</label>
+                            <select id="income" name="income" class="form-control">
+                                <option value="">Selecione...</option>
+                                <option value="low">Até R$ 2.000</option>
+                                <option value="medium">R$ 2.000 a R$ 5.000</option>
+                                <option value="high">Acima de R$ 5.000</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="motivation">Por que você quer adotar este animal?</label>
+                            <textarea id="motivation" name="motivation" class="form-control" rows="3" required></textarea>
+                        </div>
+                        
+                        <div id="compatibilityResult" class="compatibility-result">
+                            <h3>Resultado de Compatibilidade</h3>
+                            <div id="compatibilityPercentage" class="compatibility-score">85%</div>
+                            <p id="compatibilityMessage" class="compatibility-message">Ótima compatibilidade! Vocês parecem ser uma ótima combinação.</p>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button type="button" id="checkCompatibility" class="btn-check">Verificar Compatibilidade</button>
+                            <button type="submit" class="btn-submit">Enviar Solicitação</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se o usuário está logado
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const loginButton = document.getElementById('loginButton');
+            const userProfile = document.getElementById('userProfile');
+            const avatarLetter = document.querySelector('.avatar-letter');
+
+            // Atualiza o menu de navegação
+            function updateNavMenu() {
+                if (userData) {
+                    // Se o usuário estiver logado
+                    if (loginButton) loginButton.style.display = 'none';
+                    if (userProfile) userProfile.style.display = 'block';
+                    if (avatarLetter && userData.name) {
+                        avatarLetter.textContent = userData.name.charAt(0).toUpperCase();
+                    }
+                } else {
+                    // Se não estiver logado
+                    if (loginButton) loginButton.style.display = 'block';
+                    if (userProfile) userProfile.style.display = 'none';
+                }
+            }
+
+
+            // Atualiza o menu quando a página é carregada
+            updateNavMenu();
+
+            // Logout
+            const logoutBtn = document.getElementById('logoutButton');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('userData');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Configura o menu dropdown - Versão super simples
+            const dropdownBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            if (dropdownBtn && dropdownContent) {
+                // Fecha o menu ao clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.dropdown')) {
+                        dropdownContent.style.display = 'none';
+                    }
+                });
+
+                // Fecha o menu ao rolar a página
+                let isScrolling;
+                window.addEventListener('scroll', function() {
+                    dropdownContent.style.display = 'none';
+                    
+                    // Limpa o timeout anterior
+                    window.clearTimeout(isScrolling);
+                    
+                    // Define um timeout para evitar fechar durante rolagem suave
+                    isScrolling = setTimeout(function() {
+                        // Código de rolagem terminou
+                    }, 100);
+                }, false);
+            }
+        });
+    </script>
+
+</body>
+</html> 

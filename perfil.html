@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil | Adote+</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon"><i class="fas fa-paw"></i></span>
+                    <span class="logo-text">Adote+</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="adocao.html">Adoção</a></li>
+                    <li><a href="ajuda.html">Ajuda</a></li>
+                    <li id="loginButton" style="display: none;">
+                        <a href="login.html" class="btn btn-primary">Entrar</a>
+                    </li>
+                    <li id="userProfile" style="display: none;">
+                        <div class="user-profile">
+                            <img src="assets/images/default-avatar.svg" alt="Avatar do usuário">
+                            <div class="user-menu">
+                                <a href="perfil.html" class="user-menu-item">
+                                    <i class="fas fa-user"></i>
+                                    Perfil
+                                </a>
+                                <a href="#" class="user-menu-item" id="logoutButton">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="profile-container">
+        <div class="container">
+            <div class="profile-content">
+                <div class="profile-section">
+                    <h2>Meu Perfil</h2>
+                    <div class="profile-info-display">
+                        <div class="info-group">
+                            <label>Nome</label>
+                            <div class="info-value" id="displayName">Carregando...</div>
+                        </div>
+                        <div class="info-group">
+                            <label>E-mail</label>
+                            <div class="info-value" id="displayEmail">Carregando...</div>
+                        </div>
+                        <div class="info-group">
+                            <label>CPF</label>
+                            <div class="info-value" id="displayCPF">
+                                <span class="masked-value">●●●.●●●.●●●-●●</span>
+                                <button class="toggle-visibility" id="toggleCPF">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/profile.js"></script>
+</body>
+</html>

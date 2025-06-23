@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Adote+</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Garantir que o tema claro esteja ativo */
+        :root {
+            --primary-color: #A06235;
+            --text-color: #2d3748;
+            --bg-secondary: #f8fafc;
+            --card-bg: #ffffff;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-color);
+        }
+        
+        /* Estilos para o header simplificado */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 10;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-left: 10px;
+            background: linear-gradient(90deg, var(--primary-color), #ff8c42);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color), #ff8c42);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(160, 98, 53, 0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(160, 98, 53, 0.3);
+        }
+
+        .auth-form.success {
+            animation: successPulse 0.5s ease-in-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon"><i class="fas fa-paw"></i></span>
+                    <span class="logo-text">Adote+</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="adocao.html">Adoção</a></li>
+                    <li><a href="ajuda.html">Ajuda</a></li>
+                    <li id="loginButton" style="display: none;">
+                        <a href="login.html" class="btn btn-primary">Entrar</a>
+                    </li>
+                    <li id="userProfile" style="display: none;">
+                        <div class="user-profile">
+                            <img src="assets/images/default-avatar.svg" alt="Avatar do usuário">
+                            <div class="user-menu">
+                                <a href="perfil.html" class="user-menu-item">
+                                    <i class="fas fa-user"></i>
+                                    Perfil
+                                </a>
+                                <a href="#" class="user-menu-item" id="logoutButton">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo-icon-large">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <h1>Bem-vindo de volta!</h1>
+                    <p>Entre com sua conta para continuar</p>
+                </div>
+                
+                <div class="auth-forms">
+                    <!-- Formulário de Login -->
+                    <form id="loginForm" class="auth-form active">
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                E-mail
+                            </label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i>
+                                Senha
+                            </label>
+                            <div class="password-input">
+                                <input type="password" id="password" class="form-control" required>
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="rememberMe">
+                                Lembrar-me
+                            </label>
+                            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn-block">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Entrar
+                        </button>
+                    </form>
+
+                    <!-- Formulário de Cadastro -->
+                    <form id="registerForm" class="auth-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="nome">
+                                <i class="fas fa-user"></i>
+                                Nome Completo
+                            </label>
+                            <div style="position: relative;">
+                                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerEmail">
+                                <i class="fas fa-envelope"></i>
+                                Email
+                            </label>
+                            <div style="position: relative;">
+                                <input type="email" id="registerEmail" name="email" placeholder="Seu email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf">
+                                <i class="fas fa-id-card"></i>
+                                CPF
+                            </label>
+                            <div style="position: relative;">
+                                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerSenha">
+                                <i class="fas fa-lock"></i>
+                                Senha
+                            </label>
+                            <div class="password-input" style="position: relative;">
+                                <input type="password" id="registerSenha" name="senha" placeholder="Sua senha" required>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <!-- Campo de termos removido conforme solicitado -->
+                        </div>
+
+                        <button type="submit" class="btn btn-block">
+                            <i class="fas fa-user-plus"></i>
+                            Cadastrar
+                        </button>
+                    </form>
+                </div>
+
+                <div class="auth-footer">
+                    <div class="auth-toggle">
+                        <p>Não tem uma conta? <a href="#" id="showRegister">Cadastre-se</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do menu
+            const loginButtonEl = document.getElementById('loginButton');
+            const userProfileEl = document.getElementById('userProfile');
+            const dropdownBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            const avatarLetter = document.querySelector('.avatar-letter');
+            
+            // Verifica se o usuário está logado
+            const currentUserData = JSON.parse(localStorage.getItem('userData'));
+
+            // Função para atualizar a interface do menu
+            function updateMenuUI() {
+                const userData = JSON.parse(localStorage.getItem('userData'));
+                const loginButton = document.getElementById('loginButton');
+                const userProfile = document.getElementById('userProfile');
+                
+                // Na tela de login, esconder o menu do usuário e o botão de menu
+                if (window.location.pathname.includes('login.html')) {
+                    const menuToggle = document.querySelector('.mobile-menu-toggle');
+                    if (userProfile) userProfile.style.display = 'none';
+                    if (menuToggle) menuToggle.style.display = 'none';
+                    return;
+                }
+                
+                // Para as outras páginas
+                if (userData) {
+                    // Se o usuário estiver logado
+                    if (loginButton) loginButton.style.display = 'none';
+                    if (userProfile) userProfile.style.display = 'block';
+                } else {
+                    // Se não estiver logado
+                    if (loginButton) loginButton.style.display = 'block';
+                    if (userProfile) userProfile.style.display = 'none';
+                }
+            }
+
+            // Inicializa a interface do menu
+            updateMenuUI();
+
+            // Configura o menu dropdown - Versão super simples
+            if (dropdownBtn && dropdownContent) {
+                // Fecha o menu ao clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.dropdown')) {
+                        dropdownContent.style.display = 'none';
+                    }
+                });
+
+                // Fecha o menu ao rolar a página
+                let isScrolling;
+                window.addEventListener('scroll', function() {
+                    dropdownContent.style.display = 'none';
+                    
+                    // Limpa o timeout anterior
+                    window.clearTimeout(isScrolling);
+                    
+                    // Define um timeout para evitar fechar durante rolagem suave
+                    isScrolling = setTimeout(function() {
+                        // Código de rolagem terminou
+                    }, 100);
+                }, false);
+            }
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginToggle = document.getElementById('loginToggle');
+            const registerToggle = document.getElementById('registerToggle');
+            const showRegisterBtn = document.getElementById('showRegister');
+            const showLoginBtn = document.getElementById('showLogin');
+            const loginButton = document.getElementById('loginButton');
+            const userProfile = document.getElementById('userProfile');
+            const userMenu = document.querySelector('.user-menu');
+            const userName = document.querySelector('.user-name');
+            const cpfInput = document.getElementById('cpf');
+            const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+            // Função para limpar o CPF (remover pontos e hífen)
+            function limparCPF(cpf) {
+                return cpf.replace(/[^\d]/g, '');
+            }
+
+            // Formatar CPF enquanto digita
+            if (cpfInput) {
+                cpfInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    
+                    // Limitar a 11 dígitos
+                    if (value.length > 11) {
+                        value = value.substring(0, 11);
+                    }
+                    
+                    // Aplicar máscara
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                    
+                    // Remover caracteres extras da máscara
+                    value = value.replace(/[\D]+$/, '');
+                    
+                    e.target.value = value;
+                    
+                    // Validar CPF em tempo real
+                    if (value.length === 14) { // CPF completo com máscara
+                        if (validarCPF(limparCPF(value))) {
+                            e.target.classList.remove('input-error');
+                            e.target.classList.add('input-valid');
+                        } else {
+                            e.target.classList.remove('input-valid');
+                            e.target.classList.add('input-error');
+                        }
+                    } else {
+                        e.target.classList.remove('input-valid', 'input-error');
+                    }
+                });
+                
+                // Validar CPF ao sair do campo
+                cpfInput.addEventListener('blur', function(e) {
+                    const value = e.target.value;
+                    if (value && value.length === 14) {
+                        if (!validarCPF(limparCPF(value))) {
+                            showMessage('CPF inválido. Por favor, verifique os dados informados.', true);
+                        }
+                    }
+                });
+            }
+
+            // Toggle entre login e cadastro
+            showRegisterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                loginToggle.style.display = 'none';
+                registerToggle.style.display = 'block';
+            });
+
+            showLoginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                registerToggle.style.display = 'none';
+                loginToggle.style.display = 'block';
+            });
+
+            // Toggle de visibilidade da senha
+            togglePasswordButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            });
+
+            // Função para verificar se o usuário está logado
+            function checkUserLogin() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user) {
+                    if (loginButton) loginButton.style.display = 'none';
+                    if (userProfile) userProfile.style.display = 'block';
+                    if (userName) userName.textContent = user.nome;
+                } else {
+                    if (loginButton) loginButton.style.display = 'block';
+                    if (userProfile) userProfile.style.display = 'none';
+                }
+            }
+
+            // Garantir que o formulário de login esteja visível ao carregar a página
+            if (loginForm) loginForm.style.display = 'block';
+            if (registerForm) registerForm.style.display = 'none';
+            if (loginToggle) loginToggle.style.display = 'block';
+            if (registerToggle) registerToggle.style.display = 'none';
+
+            // Verificar login ao carregar a página
+            checkUserLogin();
+
+            // Toggle do menu do usuário
+            const userProfileDiv = document.querySelector('.user-profile');
+            if (userProfileDiv) {
+            userProfileDiv.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userMenu.classList.toggle('active');
+            });
+            }
+
+            // Fechar menu ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (userMenu && userProfileDiv && !userProfileDiv.contains(e.target)) {
+                    userMenu.classList.remove('active');
+                }
+            });
+
+            // Função para mostrar mensagens com animação
+            function showMessage(message, isError = false, elementId = 'loginMessage') {
+                let messageElement = document.getElementById(elementId);
+                
+                // Se não encontrar o elemento, criar um novo
+                if (!messageElement) {
+                    messageElement = document.createElement('div');
+                    messageElement.id = elementId;
+                    messageElement.style.margin = '15px 0';
+                    messageElement.style.padding = '12px 20px';
+                    messageElement.style.borderRadius = '6px';
+                    messageElement.style.fontSize = '0.95rem';
+                    messageElement.style.transition = 'all 0.3s ease';
+                    messageElement.style.opacity = '0';
+                    messageElement.style.transform = 'translateY(10px)';
+                    
+                    // Inserir antes do primeiro elemento filho do formulário ativo
+                    const activeForm = document.querySelector('.auth-form:not([style*="display: none"])');
+                    if (activeForm) {
+                        activeForm.insertBefore(messageElement, activeForm.firstChild);
+                    } else {
+                        // Se não encontrar o formulário ativo, adicionar ao body
+                        document.body.appendChild(messageElement);
+                    }
+                }
+                
+                // Definir estilos com base no tipo de mensagem
+                if (isError) {
+                    messageElement.style.backgroundColor = '#fee2e2';
+                    messageElement.style.color = '#991b1b';
+                    messageElement.style.borderLeft = '4px solid #dc2626';
+                } else {
+                    messageElement.style.backgroundColor = '#dcfce7';
+                    messageElement.style.color = '#166534';
+                    messageElement.style.borderLeft = '4px solid #16a34a';
+                }
+                
+                // Definir o conteúdo da mensagem
+                messageElement.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}" style="margin-top: 2px;"></i>
+                        <div>${message}</div>
+                    </div>
+                `;
+                
+                // Forçar reflow para ativar a animação
+                void messageElement.offsetWidth;
+                
+                // Animar entrada
+                messageElement.style.display = 'block';
+                messageElement.style.opacity = '1';
+                messageElement.style.transform = 'translateY(0)';
+                
+                // Remover a mensagem após 5 segundos com animação
+                setTimeout(() => {
+                    if (messageElement) {
+                        messageElement.style.opacity = '0';
+                        messageElement.style.transform = 'translateY(-10px)';
+                        
+                        // Remover o elemento após a animação
+                        setTimeout(() => {
+                            if (messageElement && messageElement.parentNode) {
+                                messageElement.style.display = 'none';
+                                // Não remover o elemento para reutilização
+                            }
+                        }, 300);
+                    }
+                }, 5000);
+            }
+
+            // Função para adicionar estilos de erro a um campo
+            function setFieldError(fieldId, hasError, message = '') {
+                const field = document.getElementById(fieldId);
+                if (!field) return;
+                
+                const formGroup = field.closest('.form-group');
+                if (!formGroup) return;
+                
+                // Remover mensagens de erro existentes
+                const existingError = formGroup.querySelector('.field-error');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Adicionar ou remover classe de erro
+                if (hasError) {
+                    formGroup.classList.add('has-error');
+                    
+                    // Adicionar mensagem de erro
+                    if (message) {
+                        const errorElement = document.createElement('div');
+                        errorElement.className = 'field-error';
+                        errorElement.style.color = '#dc2626';
+                        errorElement.style.fontSize = '0.8rem';
+                        errorElement.style.marginTop = '5px';
+                        errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                        
+                        // Inserir após o campo ou o container do campo
+                        const inputContainer = formGroup.querySelector('.password-input') || field;
+                        inputContainer.insertAdjacentElement('afterend', errorElement);
+                    }
+                    
+                    // Adicionar animação de shake
+                    formGroup.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        formGroup.style.animation = '';
+                    }, 500);
+                } else {
+                    formGroup.classList.remove('has-error');
+                    formGroup.classList.add('has-success');
+                }
+            }
+            
+            // Validar campo de email
+            function validateEmailField(email, fieldId = 'loginEmail') {
+                if (!email) {
+                    setFieldError(fieldId, true, 'O email é obrigatório');
+                    return false;
+                }
+                
+                if (!validarEmail(email)) {
+                    setFieldError(fieldId, true, 'Por favor, insira um email válido');
+                    return false;
+                }
+                
+                setFieldError(fieldId, false);
+                return true;
+            }
+            
+            // Validar campo de senha
+            function validatePasswordField(password, fieldId = 'loginSenha') {
+                if (!password) {
+                    setFieldError(fieldId, true, 'A senha é obrigatória');
+                    return false;
+                }
+                
+                if (password.length < 6) {
+                    setFieldError(fieldId, true, 'A senha deve ter pelo menos 6 caracteres');
+                    return false;
+                }
+                
+                setFieldError(fieldId, false);
+                return true;
+            }
+            
+            // Adicionar validação em tempo real nos campos
+            document.addEventListener('input', function(e) {
+                if (e.target.matches('#loginEmail, #registerEmail, #recoveryEmail')) {
+                    validateEmailField(e.target.value, e.target.id);
+                } else if (e.target.matches('#loginSenha, #registerSenha, #confirmarSenha')) {
+                    validatePasswordField(e.target.value, e.target.id);
+                }
+            });
+            
+            // Função para fazer requisições à API
+            async function makeRequest(url, method, data) {
+                console.log(`Enviando requisição ${method} para ${url}`, data);
+                try {
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: data ? JSON.stringify(data) : undefined
+                    });
+                    
+                    const result = await response.json();
+                    console.log(`Resposta de ${url}:`, result);
+                    
+                    if (!response.ok) {
+                        throw new Error(result.message || 'Erro na requisição');
+                    }
+                    
+                    return result;
+                } catch (error) {
+                    console.error('Erro na requisição:', error);
+                    throw error; // Propagar o erro para ser tratado pelo chamador
+                }
+            }
+            
+            // Login
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('loginEmail')?.value;
+                    const senha = document.getElementById('loginSenha')?.value;
+                    
+                    // Validação dos campos
+                    const isEmailValid = validateEmailField(email, 'loginEmail');
+                    const isPasswordValid = validatePasswordField(senha, 'loginSenha');
+                    
+                    if (!isEmailValid || !isPasswordValid) {
+                        showMessage('Por favor, preencha todos os campos corretamente.', true);
+                        return;
+                    }
+                    
+                    showMessage('Entrando...', false);
+                    
+                    try {
+                        // Fazer requisição para a API de login
+                        showMessage('Conectando ao servidor...', false);
+                        const response = await makeRequest('http://localhost:8000/api/login', 'POST', { email, senha });
+                        
+                        if (response && response.message === 'Login realizado com sucesso!') {
+                            const successMsg = 'Login realizado com sucesso! Redirecionando...';
+                            console.log(successMsg, response);
+                            showMessage(successMsg, false);
+                            
+                            // Salvar dados do usuário no localStorage
+                            const userData = {
+                                name: response.nome || 'Usuário',
+                                email: response.email || '',
+                                phone: response.telefone || '',
+                                address: response.endereco || '',
+                                cpf: response.cpf || ''
+                            };
+                            localStorage.setItem('userData', JSON.stringify(userData));
+                            
+                            // Redirecionar para a página inicial
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1500);
+                        } else {
+                            const errorMsg = response?.message || 'Erro ao fazer login';
+                            console.error('Erro no login:', errorMsg);
+                            showMessage(errorMsg, true);
+                        }
+                    } catch (error) {
+                        console.error('Erro no login:', error);
+                        showMessage('Erro ao conectar ao servidor', true);
+                    }
+                });
+            }
+
+            // Cadastro
+            if (registerForm) {
+                registerForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const nome = document.getElementById('nome')?.value;
+                    const email = document.getElementById('registerEmail')?.value;
+                    const cpf = document.getElementById('cpf')?.value.replace(/\D/g, '');
+                    const senha = document.getElementById('registerSenha')?.value;
+                    
+                    // Validação dos campos
+                    const isNameValid = validateNameField(nome, 'nome');
+                    const isEmailValid = validateEmailField(email, 'registerEmail');
+                    const isCpfValid = validateCpfField(cpf, 'cpf');
+                    const isPasswordValid = validatePasswordField(senha, 'registerSenha');
+                    
+                    if (!isNameValid || !isEmailValid || !isCpfValid || !isPasswordValid) {
+                        showMessage('Por favor, preencha todos os campos corretamente.', true);
+                        return;
+                    }
+                    
+                    showMessage('Criando sua conta...', false);
+                    
+                    try {
+                        // Fazer requisição para a API de registro
+                        showMessage('Registrando sua conta...', false);
+                        console.log('Enviando dados para registro:', { 
+                            nome, 
+                            email, 
+                            cpf: cpf.replace(/\D/g, ''),
+                            senha
+                        });
+                        
+                        // POST para cadastro
+                        const response = await fetch('http://localhost:8000/api/register', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                nome, 
+                                email, 
+                                cpf: cpf.replace(/\D/g, ''),
+                                senha
+                            })
+                        });
+                        const result = await response.json();
+                        console.log('Resposta do cadastro:', result);
+                        
+                        if (response.ok) {
+                            const successMsg = 'Conta criada com sucesso! Redirecionando para o login...';
+                            console.log(successMsg, result);
+                            
+                            // Estilizar a mensagem em verde
+                            const messageElement = document.getElementById('loginMessage');
+                            if (messageElement) {
+                                messageElement.style.color = '#28a745';
+                                messageElement.style.fontWeight = 'bold';
+                                messageElement.textContent = successMsg;
+                            }
+                            
+                            // Limpar o formulário
+                            registerForm.reset();
+                            
+                            // Trocar para o formulário de login após 2 segundos
+                            setTimeout(() => {
+                                showLoginForm();
+                            }, 2000);
+                        } else {
+                            const errorMsg = result?.message || 'Erro ao criar conta';
+                            console.error('Erro no cadastro:', errorMsg);
+                            showMessage(errorMsg, true);
+                        }
+                    } catch (error) {
+                        console.error('Erro ao cadastrar usuário:', error);
+                        showMessage('Erro ao conectar ao servidor', true);
+                    }
+                });
+            }
+
+            // Se houver um botão de logout na página
+            const logoutBtn = document.getElementById('logout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('userData');
+                    window.location.href = 'login.html';
+                });
+            }
+            
+            // Funcionalidade do modal de recuperação de senha
+            const forgotPasswordLink = document.querySelector('.forgot-password');
+            const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            
+            // Abrir modal
+            if (forgotPasswordLink) {
+                forgotPasswordLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (forgotPasswordModal) {
+                        forgotPasswordModal.classList.add('show');
+                        document.body.style.overflow = 'hidden'; // Impedir rolagem da página
+                        
+                        // Focar no campo de email quando o modal abrir
+                        const recoveryEmail = document.getElementById('recoveryEmail');
+                        if (recoveryEmail) {
+                            setTimeout(() => {
+                                recoveryEmail.focus();
+                            }, 300);
+                        }
+                    }
+                });
+            }
+            
+            // Fechar modal
+            function closeModal() {
+                if (forgotPasswordModal) {
+                    forgotPasswordModal.classList.remove('show');
+                    document.body.style.overflow = ''; // Restaurar rolagem da página
+                }
+            }
+            
+            // Fechar ao clicar no botão de fechar
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            
+            // Fechar ao clicar fora do modal
+            if (forgotPasswordModal) {
+                forgotPasswordModal.addEventListener('click', function(e) {
+                    if (e.target === forgotPasswordModal) {
+                        closeModal();
+                    }
+                });
+            }
+            
+            // Fechar ao pressionar ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && forgotPasswordModal && forgotPasswordModal.classList.contains('show')) {
+                    closeModal();
+                }
+            });
+            
+            // Enviar formulário de recuperação de senha
+            if (forgotPasswordForm) {
+                forgotPasswordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('recoveryEmail')?.value;
+                    
+                    if (!email) {
+                        showMessage('Por favor, insira seu email.', true);
+                        return;
+                    }
+                    
+                    if (!validarEmail(email)) {
+                        showMessage('Por favor, insira um email válido.', true);
+                        return;
+                    }
+                    
+                    // Simular envio do email (em uma aplicação real, isso seria uma chamada AJAX)
+                    const submitBtn = forgotPasswordForm.querySelector('button[type="submit"]');
+                    const originalBtnText = submitBtn.innerHTML;
+                    
+                    // Mostrar estado de carregamento
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                    
+                    // Simular atraso de rede
+                    setTimeout(() => {
+                        try {
+                            // Verificar se o email existe (simulação)
+                            const users = JSON.parse(localStorage.getItem('users')) || [];
+                            const userExists = users.some(user => user.email === email);
+                            
+                            if (userExists) {
+                                // Em uma aplicação real, aqui seria enviado um email com o link de redefinição
+                                showMessage('Enviamos um link de redefinição para o seu email. Verifique sua caixa de entrada.', false);
+                                closeModal();
+                            } else {
+                                showMessage('Nenhuma conta encontrada com este endereço de email.', true);
+                            }
+                        } catch (error) {
+                            console.error('Erro ao processar recuperação de senha:', error);
+                            showMessage('Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.', true);
+                        } finally {
+                            // Restaurar botão independentemente do resultado
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = originalBtnText;
+                            }
+                        }
+                    }, 1000); // Adicionado tempo de timeout de 1 segundo
+                });
+            }
+            
+            // Função para validar CPF
+            function validarCPF(cpf) {
+                if (!cpf) return false;
+                
+                cpf = cpf.replace(/[\D]/g, '');
+                
+                if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+                    return false;
+                }
+                
+                let soma = 0;
+                for (let i = 0; i < 9; i++) {
+                    soma += parseInt(cpf.charAt(i)) * (10 - i);
+                }
+                
+                let resto = (soma * 10) % 11;
+                if (resto === 10 || resto === 11) resto = 0;
+                
+                if (resto !== parseInt(cpf.charAt(9))) {
+                    return false;
+                }
+                
+                soma = 0;
+                for (let i = 0; i < 10; i++) {
+                    soma += parseInt(cpf.charAt(i)) * (11 - i);
+                }
+                
+                resto = (soma * 10) % 11;
+                if (resto === 10 || resto === 11) resto = 0;
+                
+                return resto === parseInt(cpf.charAt(10));
+            }
+            
+            // Função para validar email
+            function validarEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            // Função para validar campo de nome
+            function validateNameField(name, fieldId = 'nome') {
+                if (!name || name.trim() === '') {
+                    setFieldError(fieldId, true, 'O nome é obrigatório');
+                    return false;
+                }
+                
+                if (name.trim().split(' ').length < 2) {
+                    setFieldError(fieldId, true, 'Por favor, insira seu nome completo');
+                    return false;
+                }
+                
+                setFieldError(fieldId, false);
+                return true;
+            }
+            
+            // Função para validar campo de CPF
+            function validateCpfField(cpf, fieldId = 'cpf') {
+                if (!cpf) {
+                    setFieldError(fieldId, true, 'O CPF é obrigatório');
+                    return false;
+                }
+                // Não validar formato nem dígitos, aceitar qualquer valor
+                setFieldError(fieldId, false);
+                return true;
+            }
+        });
+    </script>
+
+    <!-- Modal de Recuperação de Senha -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Recuperar Senha</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Digite seu endereço de email cadastrado para receber as instruções de redefinição de senha.</p>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="recoveryEmail">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </label>
+                        <input type="email" id="recoveryEmail" name="email" placeholder="Seu email cadastrado" required>
+                    </div>
+                    <button type="submit" class="btn btn-block">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Instruções
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/user-menu.js"></script>
+
+</body>
+</html> 

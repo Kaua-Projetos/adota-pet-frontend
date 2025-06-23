@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adote+ | Adoção de Animais Responsável</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon"><i class="fas fa-paw"></i></span>
+                    <span class="logo-text">Adote+</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="adocao.html">Adoção</a></li>
+                    <li><a href="ajuda.html">Ajuda</a></li>
+                    <li id="loginButton" style="display: none;">
+                        <a href="login.html" class="btn btn-primary">Entrar</a>
+                    </li>
+                    <li id="userProfile" style="display: none;">
+                        <div class="user-profile">
+                            <img src="assets/images/default-avatar.svg" alt="Avatar do usuário">
+                            <div class="user-menu">
+                                <a href="perfil.html" class="user-menu-item">
+                                    <i class="fas fa-user"></i>
+                                    Perfil
+                                </a>
+                                <a href="#" class="user-menu-item" id="logoutButton">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>Encontre um Amigo para a Vida Toda</h1>
+                <p>Milhares de animais estão à espera de um lar. Adotar é um ato de amor que transforma vidas, inclusive a sua.</p>
+                <a href="adocao.html" class="btn btn-secondary btn-lg">Quero Adotar</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/1870301/pexels-photo-1870301.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cachorro feliz">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Por que adotar?</h2>
+                <p>A adoção responsável transforma vidas - tanto a do animal quanto a sua. Conheça alguns benefícios de trazer um novo amigo para sua família.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Amor Incondicional</h3>
+                    <p>Animais adotados são extremamente gratos e oferecem amor e companhia incondicionais para toda a família.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Ajuda Quem Precisa</h3>
+                    <p>Ao adotar, você ajuda a reduzir o número de animais abandonados e superlotação em abrigos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-smile-beam"></i>
+                    </div>
+                    <h3>Melhora Seu Bem-estar</h3>
+                    <p>Estudos mostram que ter um animal de estimação reduz o estresse e aumenta sua qualidade de vida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Animais disponíveis para adoção</h2>
+                <p>Conheça alguns dos nossos amigos de quatro patas que estão à procura de um lar amoroso</p>
+            </div>
+            <div class="pets-grid">
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Thor">
+                        <div class="pet-tag">Cachorro</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Thor</h3>
+                        <p class="pet-desc">2 anos, Macho, Porte Médio</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=1" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Luna">
+                        <div class="pet-tag">Gato</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Luna</h3>
+                        <p class="pet-desc">5 anos, Fêmea, Porte Pequeno</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=2" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <img src="https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Max">
+                        <div class="pet-tag">Cachorro</div>
+                    </div>
+                    <div class="pet-info">
+                        <h3>Max</h3>
+                        <p class="pet-desc">3 anos, Macho, Porte Grande</p>
+                        <p class="pet-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <a href="pet-details.html?id=3" class="btn btn-highlight">Quero adotar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: 40px; text-align: center;">
+                <a href="adocao.html" class="btn btn-primary btn-lg">Ver todos os animais</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Histórias de adoção</h2>
+                <p>Conheça histórias reais de pessoas que mudaram suas vidas ao adotarem um animal</p>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "Adotar o Max foi a melhor decisão que tomei. Ele trouxe tanta alegria para a minha vida e para a minha família. Ele estava em um abrigo há quase um ano, mas agora tem um lar cheio de amor."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ana">
+                            </div>
+                            <div>
+                                <div class="testimonial-name">Ana Silva</div>
+                                <div class="testimonial-location">São Paulo, SP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "Minha Luna era uma gatinha tímida e assustada quando a adotei. Hoje ela é a rainha da casa, cheia de personalidade e carinho. Não consigo imaginar minha vida sem ela."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Pedro">
+                            </div>
+                            <div>
+                                <div class="testimonial-name">Pedro Santos</div>
+                                <div class="testimonial-location">Rio de Janeiro, RJ</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "Thor chegou na minha vida em um momento difícil. Ele me ajudou a superar a depressão com seu amor incondicional. Adotar mudou completamente minha perspectiva de vida."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Carla">
+                            </div>
+                            <div>
+                                <div class="testimonial-name">Carla Oliveira</div>
+                                <div class="testimonial-location">Belo Horizonte, MG</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para mudar uma vida?</h2>
+            <p>Um animal está esperando por você para dar e receber amor. Adote com responsabilidade e ganhe um amigo para toda a vida.</p>
+            <div>
+                <a href="adocao.html" class="btn btn-white btn-lg">Quero Adotar</a>
+                <a href="ajuda.html" class="btn btn-outline btn-lg" style="border-color: white; color: white;">Quero Ajudar</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <span class="logo-icon"><i class="fas fa-paw"></i></span>
+                        <span class="logo-text">Adote+</span>
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Contato</h4>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> adotemais@gmail.com</li>
+                            <li><i class="fas fa-phone"></i> (65) 99999-9999</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Cuiabá, MT</li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Redes Sociais</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Adote+. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/theme-switcher.js"></script>
+
+    <script>
+        // Verifica se o usuário está logado
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const loginButton = document.getElementById('loginButton');
+            const userProfile = document.getElementById('userProfile');
+            const avatarLetter = document.querySelector('.avatar-letter');
+
+            // Atualiza o menu de navegação
+            function updateNavMenu() {
+                if (userData) {
+                    // Se o usuário estiver logado
+                    if (loginButton) loginButton.style.display = 'none';
+                    if (userProfile) userProfile.style.display = 'block';
+                    if (avatarLetter && userData.name) {
+                        avatarLetter.textContent = userData.name.charAt(0).toUpperCase();
+                    }
+                } else {
+                    // Se não estiver logado
+                    if (loginButton) loginButton.style.display = 'block';
+                    if (userProfile) userProfile.style.display = 'none';
+                }
+            }
+
+            // Atualiza o menu quando a página é carregada
+            updateNavMenu();
+
+            // Logout
+            const logoutBtn = document.getElementById('logout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('userData');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Configura o menu dropdown - Versão super simples
+            const dropdownBtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            if (dropdownBtn && dropdownContent) {
+                // Fecha o menu ao clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.dropdown')) {
+                        dropdownContent.style.display = 'none';
+                    }
+                });
+
+                // Fecha o menu ao rolar a página
+                let isScrolling;
+                window.addEventListener('scroll', function() {
+                    dropdownContent.style.display = 'none';
+                    
+                    // Limpa o timeout anterior
+                    window.clearTimeout(isScrolling);
+                    
+                    // Define um timeout para evitar fechar durante rolagem suave
+                    isScrolling = setTimeout(function() {
+                        // Código de rolagem terminou
+                    }, 100);
+                }, false);
+            }
+        });
+    </script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html> 
