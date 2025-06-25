@@ -73,45 +73,133 @@
 
         .personality-section {
             margin: 2rem 0;
-            padding: 1.5rem;
-            background: #f8f9fa;
-            border-radius: 12px;
+            padding: 2rem;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .personality-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
         }
 
         .personality-section h2 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .personality-section h2 i {
+            color: #ff6b6b;
+            font-size: 1.3em;
         }
 
         .personality-traits {
             display: grid;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .trait {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.25rem;
+            padding: 0.5rem 0;
+            position: relative;
         }
 
         .trait-label {
-            min-width: 100px;
+            min-width: 120px;
             font-weight: 600;
+            color: #4a5568;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .trait-label i {
+            width: 24px;
+            text-align: center;
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .trait-bar-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .trait-bar {
             flex: 1;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
+            height: 10px;
+            background: #edf2f7;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
         }
 
         .trait-fill {
-            height: 100%;
-            background: var(--primary-color);
+            height: 6px;
+            background: #e74c3c; /* Vermelho padrão */
             border-radius: 4px;
-            transition: width 0.3s ease;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+            margin: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            align-self: center;
+        }
+
+        .trait-fill.high {
+            background: linear-gradient(90deg, #2ecc71, #27ae60); /* Verde para valores altos */
+        }
+
+        .trait-fill.medium {
+            background: linear-gradient(90deg, #f39c12, #e67e22); /* Laranja para valores médios */
+        }
+
+        .trait-fill.low {
+            background: linear-gradient(90deg, #e74c3c, #c0392b); /* Vermelho para valores baixos */
+        }
+
+        .trait-fill::after {
+            content: none;
+        }
+        
+        .carinho-trait {
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .carinho-trait::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            border-radius: 2px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .carinho-trait.high::after {
+            background-color: #4CAF50; /* Verde */
+        }
+        
+        .carinho-trait.low::after {
+            background-color: #f44336; /* Vermelho */
         }
     </style>
 </head>
@@ -149,28 +237,31 @@
                     <div class="personality-section">
                         <h2><i class="fas fa-heart"></i> Personalidade</h2>
                         <div class="personality-traits">
-                            <div class="trait">
-                                <span class="trait-label">Energia</span>
+                            <div class="trait carinho-trait" id="carinhoTrait">
+                                <span class="trait-label">
+                                    <i class="fas fa-heart"></i>
+                                    Carinho
+                                </span>
                                 <div class="trait-bar">
-                                    <div class="trait-fill" data-value="80"></div>
+                                    <div class="trait-fill high" data-value="90" style="width: 90%"></div>
                                 </div>
                             </div>
                             <div class="trait">
-                                <span class="trait-label">Carinho</span>
+                                <span class="trait-label">
+                                    <i class="fas fa-users"></i>
+                                    Sociável
+                                </span>
                                 <div class="trait-bar">
-                                    <div class="trait-fill" data-value="90"></div>
+                                    <div class="trait-fill low" data-value="35" style="width: 35%"></div>
                                 </div>
                             </div>
                             <div class="trait">
-                                <span class="trait-label">Sociável</span>
+                                <span class="trait-label">
+                                    <i class="fas fa-smile"></i>
+                                    Brincalhão
+                                </span>
                                 <div class="trait-bar">
-                                    <div class="trait-fill" data-value="75"></div>
-                                </div>
-                            </div>
-                            <div class="trait">
-                                <span class="trait-label">Brincalhão</span>
-                                <div class="trait-bar">
-                                    <div class="trait-fill" data-value="85"></div>
+                                    <div class="trait-fill high" data-value="85" style="width: 85%"></div>
                                 </div>
                             </div>
                         </div>

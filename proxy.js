@@ -36,30 +36,28 @@ app.post('/api/auth/login', async (req, res) => {
     }
 
     try {
-        // Fazer requisição para a API externa
-        const response = await fetch('http://52.67.61.219:8080/users', {
-            method: 'GET',
+        // Fazer requisição para a API externa usando o endpoint correto
+        const response = await fetch('http://52.67.61.219:8080/users/login', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ email, senha })
         });
-        
-        const users = await response.json();
-        
-        // Encontrar usuário
-        const user = users.find(u => u.email === email && u.senha === senha);
-        
-        if (!user) {
-            return res.status(401).json({ success: false, message: 'Credenciais inválidas' });
+
+        const result = await response.json();
+
+        if (!response.ok || !result || !result.id) {
+            return res.status(401).json({ success: false, message: result.message || 'Credenciais inválidas' });
         }
 
         res.json({ 
             success: true, 
             message: 'Login realizado com sucesso',
             user: {
-                id: user.id,
-                nome: user.nome,
-                email: user.email
+                id: result.id,
+                nome: result.nome,
+                email: result.email
             }
         });
     } catch (error) {

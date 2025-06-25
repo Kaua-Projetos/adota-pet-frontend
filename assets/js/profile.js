@@ -1,43 +1,62 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Carregar dados do usuário
-    const userData = JSON.parse(localStorage.getItem('userData')) || {};
+document.addEventListener('DOMContentLoaded', async function() {
+    const displayName = document.getElementById('displayName');
+    const displayEmail = document.getElementById('displayEmail');
+    const displayCPF = document.getElementById('displayCPF');
+    const toggleCPFButton = document.getElementById('toggleCPF');
     
+    // Obter dados do usuário do localStorage
+    const userData = localStorage.getItem('userData');
+    let userEmail = null;
+    if (userData) {
+        try {
+            const userObj = JSON.parse(userData);
+            userEmail = userObj.email;
+        } catch (e) {
+            userEmail = null;
+        }
+    }
+    
+    if (userEmail) {
+        // Buscar dados do usuário usando o email
+        try {
+            const response = await fetch(`http://52.67.61.219:8080/users?email=${encodeURIComponent(userEmail)}`);
+            if (response.ok) {
+                const users = await response.json();
+                if (users && users.length > 0) {
+                    const updatedUser = users[0];
+                    displayName.textContent = updatedUser.name || updatedUser.nome || 'Nome não disponível';
+                    displayEmail.textContent = updatedUser.email || 'Email não disponível';
+                    const userCPF = updatedUser.cpf || updatedUser.documento || '';
+                    if (toggleCPFButton) {
+                        let cpfVisible = false;
+                        const maskedValue = displayCPF.querySelector('.masked-value');
+                        toggleCPFButton.addEventListener('click', function() {
+                            cpfVisible = !cpfVisible;
+                            if (cpfVisible) {
+                                maskedValue.textContent = userCPF || '000.000.000-00';
+                                toggleCPFButton.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                            } else {
+                                maskedValue.textContent = '●●●.●●●.●●●-●●';
+                                toggleCPFButton.innerHTML = '<i class="fas fa-eye"></i>';
+                            }
+                        });
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao buscar dados do usuário:', error);
+        }
+    } else {
+        // Se não houver dados do usuário, redirecionar para login
+        window.location.href = 'login.html';
+    }
+
     // Função para formatar CPF
     function formatCPF(cpf) {
         if (!cpf) return '●●●.●●●.●●●-●●';
         cpf = cpf.replace(/\D/g, '');
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     }
-
-    // Preencher informações do perfil
-    document.getElementById('displayName').textContent = userData.name || 'Nome não informado';
-    document.getElementById('displayEmail').textContent = userData.email || 'E-mail não informado';
-    
-    // Configurar visibilidade do CPF
-    const cpfDisplay = document.getElementById('displayCPF');
-    const maskedValue = cpfDisplay.querySelector('.masked-value');
-    const toggleBtn = document.getElementById('toggleCPF');
-    let isVisible = false;
-    
-    // Função para atualizar a exibição do CPF
-    function updateCPFDisplay() {
-        if (isVisible) {
-            maskedValue.textContent = formatCPF(userData.cpf || '');
-            toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-        } else {
-            maskedValue.textContent = '●●●.●●●.●●●-●●';
-            toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
-        }
-    }
-
-    // Configurar o botão de toggle do CPF
-    toggleBtn.addEventListener('click', function() {
-        isVisible = !isVisible;
-        updateCPFDisplay();
-    });
-
-    // Inicializar a exibição do CPF
-    updateCPFDisplay();
 
     // Máscara para o campo de CPF
     const cpfInput = document.getElementById('cpf');
@@ -72,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const profileImg = document.getElementById('profileImage');
 
     // Carregar foto de perfil salva
-    if (userData.profileImage) {
-        profileImg.src = userData.profileImage;
+    if (user.profileImage) {
+        profileImg.src = user.profileImage;
     }
 
     editPhotoBtn.addEventListener('click', function() {
@@ -88,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.onload = function(e) {
                     profileImg.src = e.target.result;
                     // Salvar a imagem no localStorage (em produção, enviar para um servidor)
-                    userData.profileImage = e.target.result;
-                    localStorage.setItem('userData', JSON.stringify(userData));
+                    user.profileImage = e.target.result;
+                    localStorage.setItem('userData', JSON.stringify(user));
 
                     // Atualizar o avatar no header também
                     const headerAvatar = document.querySelector('#userProfile img');
@@ -110,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const updatedData = {
-            ...userData,
+            ...user,
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
             cpf: document.getElementById('cpf').value,
@@ -121,8 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('userData', JSON.stringify(updatedData));
         
         // Atualizar informações exibidas
-        document.getElementById('displayName').textContent = updatedData.name || 'Nome não informado';
-        document.getElementById('displayEmail').textContent = updatedData.email || 'E-mail não informado';
+        displayName.textContent = updatedData.name || 'Nome não informado';
+        displayEmail.textContent = updatedData.email || 'E-mail não informado';
 
         // Mostrar mensagem de sucesso
         const successMessage = document.createElement('div');

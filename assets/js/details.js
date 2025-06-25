@@ -79,10 +79,24 @@ function loadPetDetails() {
         'Calmo': 70
     };
 
-    traits.forEach((trait, index) => {
-        const traitName = trait.parentElement.previousElementSibling.textContent;
-        const value = pet.personality?.[traitName.toLowerCase()] || defaultTraits[traitName] || 70;
+    traits.forEach((trait) => {
+        const traitName = trait.parentElement.previousElementSibling.textContent.trim();
+        const value = parseInt(trait.getAttribute('data-value'));
+        
+        // Set the width based on the value
         trait.style.width = `${value}%`;
+        
+        // Set the appropriate color class
+        if (value >= 80) {
+            trait.classList.add('high');
+            trait.classList.remove('medium', 'low');
+        } else if (value >= 50) {
+            trait.classList.add('medium');
+            trait.classList.remove('high', 'low');
+        } else {
+            trait.classList.add('low');
+            trait.classList.remove('high', 'medium');
+        }
     });
 
     // Atualizar requisitos de adoção

@@ -131,7 +131,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="adocao.html">Adoção</a></li>
                     <li><a href="ajuda.html">Ajuda</a></li>
-                    <li id="loginButton" style="display: none;">
+                    <li id="loginButton">
                         <a href="login.html" class="btn btn-primary">Entrar</a>
                     </li>
                     <li id="userProfile" style="display: none;">
@@ -626,22 +626,25 @@
                     const response = await fetch(url, {
                         method: method,
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         },
                         body: data ? JSON.stringify(data) : undefined
                     });
                     
-                    const result = await response.json();
-                    console.log(`Resposta de ${url}:`, result);
+                    const responseData = await response.json().catch(() => ({}));
+                    console.log(`Resposta de ${url}:`, { status: response.status, data: responseData });
                     
                     if (!response.ok) {
-                        throw new Error(result.message || 'Erro na requisição');
+                        const error = new Error(responseData.message || 'Erro na requisição');
+                        error.response = { status: response.status, data: responseData };
+                        throw error;
                     }
                     
-                    return result;
+                    return responseData;
                 } catch (error) {
                     console.error('Erro na requisição:', error);
-                    throw error; // Propagar o erro para ser tratado pelo chamador
+                    throw error;
                 }
             }
             
@@ -667,35 +670,63 @@
                     try {
                         // Fazer requisição para a API de login
                         showMessage('Conectando ao servidor...', false);
-                        const response = await makeRequest('http://localhost:8000/api/login', 'POST', { email, senha });
+                        const response = await makeRequest('http://localhost:8080/users/login', 'POST', { 
+                            email: email, 
+                            password: senha 
+                        });
                         
-                        if (response && response.message === 'Login realizado com sucesso!') {
-                            const successMsg = 'Login realizado com sucesso! Redirecionando...';
-                            console.log(successMsg, response);
-                            showMessage(successMsg, false);
-                            
-                            // Salvar dados do usuário no localStorage
-                            const userData = {
-                                name: response.nome || 'Usuário',
-                                email: response.email || '',
-                                phone: response.telefone || '',
-                                address: response.endereco || '',
-                                cpf: response.cpf || ''
-                            };
-                            localStorage.setItem('userData', JSON.stringify(userData));
-                            
-                            // Redirecionar para a página inicial
-                            setTimeout(() => {
-                                window.location.href = 'index.html';
-                            }, 1500);
-                        } else {
-                            const errorMsg = response?.message || 'Erro ao fazer login';
-                            console.error('Erro no login:', errorMsg);
-                            showMessage(errorMsg, true);
+                        // Se chegou aqui, o login foi bem-sucedido
+                        const successMsg = 'Login realizado com sucesso! Redirecionando...';
+                        console.log(successMsg, response);
+                        showMessage(successMsg, false);
+                        
+                        // Salvar dados do usuário no localStorage
+                        const userData = {
+                            name: response.user?.name || 'Usuário',
+                            email: response.user?.email || email,
+                            phone: response.user?.phone || '',
+                            address: response.user?.address || '',
+                            cpf: response.user?.cpf || ''
+                        };
+                        
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                        localStorage.setItem('userEmail', response.user?.email || email);
+                        
+                        if (response.token) {
+                            localStorage.setItem('authToken', response.token);
                         }
+                        
+                        // Redirecionar para a página inicial
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                        
                     } catch (error) {
                         console.error('Erro no login:', error);
-                        showMessage('Erro ao conectar ao servidor', true);
+                        
+                        // Tratamento de erros mais específico
+                        let errorMessage = 'Erro ao fazer login';
+                        
+                        if (error.response) {
+                            // Erro retornado pela API
+                            const { status, data } = error.response;
+                            
+                            if (status === 401) {
+                                errorMessage = data?.message || 'Email ou senha incorretos';
+                            } else if (status === 400) {
+                                errorMessage = data?.message || 'Dados de login inválidos';
+                            } else if (status >= 500) {
+                                errorMessage = 'Erro no servidor. Tente novamente mais tarde.';
+                            } else {
+                                errorMessage = data?.message || `Erro ${status}`;
+                            }
+                        } else if (error.message === 'Failed to fetch') {
+                            errorMessage = 'Não foi possível conectar ao servidor. Verifique sua conexão.';
+                        } else {
+                            errorMessage = error.message || 'Ocorreu um erro inesperado';
+                        }
+                        
+                        showMessage(errorMessage, true);
                     }
                 });
             }
